@@ -1,8 +1,9 @@
 import Navigation from '@/components/Navigation';
 import HeroCarousel from '@/components/HeroCarousel';
 import FeaturedParts from '@/components/FeaturedParts';
-import BrandShowcase from '@/components/BrandShowcase';
+import PartsCategories from '@/components/PartsCategories';
 import CarManufacturers from '@/components/CarManufacturers';
+import QualityStandards from '@/components/QualityStandards';
 import Footer from '@/components/Footer';
 import Chatbot from '@/components/Chatbot';
 
@@ -13,8 +14,9 @@ export default function Home() {
       <main>
         <HeroCarousel />
         <FeaturedParts />
-        <BrandShowcase />
+        <PartsCategories />
         <CarManufacturers />
+        <QualityStandards />
       </main>
       <Footer />
       <Chatbot />

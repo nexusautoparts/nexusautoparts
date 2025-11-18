@@ -2,7 +2,6 @@ import { Facebook, Instagram, Youtube, MessageCircle, Mail } from 'lucide-react'
 import { SiVisa, SiMastercard } from 'react-icons/si';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Link } from 'wouter';
 
 const footerLinks = {
   company: [
@@ -38,11 +37,9 @@ export default function Footer() {
             <ul className="space-y-2">
               {footerLinks.company.map((link) => (
                 <li key={link.name}>
-                  <Link href={link.href}>
-                    <a className="text-muted-foreground hover:text-foreground transition-colors" data-testid={`link-footer-${link.name.toLowerCase().replace(/\s+/g, '-')}`}>
-                      {link.name}
-                    </a>
-                  </Link>
+                  <a href={link.href} className="text-muted-foreground hover:text-foreground transition-colors" data-testid={`link-footer-${link.name.toLowerCase().replace(/\s+/g, '-')}`}>
+                    {link.name}
+                  </a>
                 </li>
               ))}
             </ul>
@@ -53,11 +50,9 @@ export default function Footer() {
             <ul className="space-y-2">
               {footerLinks.support.map((link) => (
                 <li key={link.name}>
-                  <Link href={link.href}>
-                    <a className="text-muted-foreground hover:text-foreground transition-colors" data-testid={`link-footer-${link.name.toLowerCase().replace(/\s+/g, '-')}`}>
-                      {link.name}
-                    </a>
-                  </Link>
+                  <a href={link.href} className="text-muted-foreground hover:text-foreground transition-colors" data-testid={`link-footer-${link.name.toLowerCase().replace(/\s+/g, '-')}`}>
+                    {link.name}
+                  </a>
                 </li>
               ))}
             </ul>
@@ -68,11 +63,9 @@ export default function Footer() {
             <ul className="space-y-2">
               {footerLinks.categories.map((link) => (
                 <li key={link.name}>
-                  <Link href={link.href}>
-                    <a className="text-muted-foreground hover:text-foreground transition-colors" data-testid={`link-footer-${link.name.toLowerCase().replace(/\s+/g, '-')}`}>
-                      {link.name}
-                    </a>
-                  </Link>
+                  <a href={link.href} className="text-muted-foreground hover:text-foreground transition-colors" data-testid={`link-footer-${link.name.toLowerCase().replace(/\s+/g, '-')}`}>
+                    {link.name}
+                  </a>
                 </li>
               ))}
             </ul>
