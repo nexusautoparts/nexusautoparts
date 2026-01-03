@@ -7,7 +7,6 @@ import usedCluster from '@/assets/images/parts/used-instrument-cluster.webp';
 import usedAbs from '@/assets/images/parts/used-abs-module.webp';
 import usedTransfer from '@/assets/images/parts/used-transfer-case.webp';
 import usedTurbo from '@/assets/images/parts/used-turbo-charger.webp';
-import usedAirbag from '@/assets/images/parts/used-airbag.webp';
 import usedDiff from '@/assets/images/parts/used-differential.webp';
 import usedAxle from '@/assets/images/parts/used-axel-shaft.webp';
 
@@ -19,7 +18,6 @@ const categories = [
   { name: 'Used ABS Module', image: usedAbs, description: 'Reliable braking systems', href: '/products' },
   { name: 'Used Transfer Case', image: usedTransfer, description: 'Durable transfer cases', href: '/products' },
   { name: 'Used Turbo Charger', image: usedTurbo, description: 'Boost power and efficiency', href: '/products' },
-  { name: 'Used Airbag', image: usedAirbag, description: 'Safety first components', href: '/products' },
   { name: 'Used Differential', image: usedDiff, description: 'Smooth power delivery', href: '/products' },
   { name: 'Used Axle Shaft', image: usedAxle, description: 'Strong and durable shafts', href: '/products' },
 ];

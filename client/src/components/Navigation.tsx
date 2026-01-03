@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search, ShoppingCart, User, Menu, X } from "lucide-react";
+import { Search, Menu, X, CreditCard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -32,7 +32,7 @@ export default function Navigation() {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-24 gap-4">
           <Link href="/" data-testid="link-home" className="flex items-center gap-2">
-            <img src="/logo.png" alt="Nexus Auto Parts" className="h-[84px] w-auto object-contain" />
+            <img src="/logo.png" alt="Nexus Auto Parts" className="h-[101px] w-auto object-contain" />
           </Link>
 
           <div className="hidden lg:flex items-center gap-1">
@@ -43,7 +43,7 @@ export default function Navigation() {
               >
                 <Button
                   variant="ghost"
-                  size="sm"
+                  className="text-base font-medium"
                   data-testid={`link-category-${category.toLowerCase().replace(" ", "-")}`}
                 >
                   {category}
@@ -64,19 +64,14 @@ export default function Navigation() {
           </div>
 
           <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon" data-testid="button-account">
-              <User className="w-5 h-5" />
-            </Button>
             <Button
-              variant="ghost"
-              size="icon"
-              className="relative"
-              data-testid="button-cart"
+              variant="default"
+              size="sm"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground"
+              data-testid="button-pay-now"
             >
-              <ShoppingCart className="w-5 h-5" />
-              <span className="absolute -top-1 -right-1 bg-ring text-primary-foreground text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                0
-              </span>
+              <CreditCard className="w-4 h-4 mr-1.5" />
+              Pay Now
             </Button>
 
             <Sheet>

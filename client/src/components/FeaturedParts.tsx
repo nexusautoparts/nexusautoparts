@@ -2,7 +2,6 @@ import { useRef } from "react";
 import ProductCard from "./ProductCard";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import brakePadsImage from "@assets/generated_images/Product_brake_pads_1a5841b4.png";
 import airFilterImage from "@assets/generated_images/Product_air_filter_d5919cb7.png";
 import sparkPlugsImage from "@assets/generated_images/Product_spark_plugs_2fbf73c7.png";
 import headlightImage from "@assets/generated_images/Product_headlight_assembly_cc2316af.png";
@@ -10,14 +9,6 @@ import batteryImage from "@assets/generated_images/Product_car_battery_41bc1071.
 import oilFilterImage from "@assets/generated_images/Product_oil_filter_4b453d0f.png";
 
 const featuredProducts = [
-  {
-    id: "1",
-    name: "Premium Brake Pads Set",
-    price: 89.99,
-    image: brakePadsImage,
-    inStock: true,
-    discount: 15,
-  },
   {
     id: "2",
     name: "High Performance Air Filter",
