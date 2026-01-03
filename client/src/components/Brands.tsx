@@ -38,13 +38,13 @@ export default function Brands() {
                     {brands.map((brand) => (
                         <Card
                             key={brand.name}
-                            className="hover:shadow-md transition-shadow border-none shadow-sm flex items-center justify-center p-4 bg-white"
+                            className="hover:shadow-md transition-shadow border-none shadow-sm flex items-center justify-center p-6 bg-white"
                         >
-                            <CardContent className="p-0 flex items-center justify-center w-full h-24">
+                            <CardContent className="p-0 flex items-center justify-center w-full h-32">
                                 <img
                                     src={brand.image}
                                     alt={brand.name}
-                                    className="max-h-16 w-auto object-contain"
+                                    className="max-h-24 w-auto object-contain"
                                 />
                             </CardContent>
                         </Card>

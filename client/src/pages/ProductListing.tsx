@@ -10,7 +10,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Label } from '@/components/ui/label';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { SlidersHorizontal } from 'lucide-react';
-import brakePadsImage from '@assets/generated_images/Product_brake_pads_1a5841b4.png';
 import airFilterImage from '@assets/generated_images/Product_air_filter_d5919cb7.png';
 import sparkPlugsImage from '@assets/generated_images/Product_spark_plugs_2fbf73c7.png';
 import headlightImage from '@assets/generated_images/Product_headlight_assembly_cc2316af.png';
@@ -18,19 +17,17 @@ import batteryImage from '@assets/generated_images/Product_car_battery_41bc1071.
 import oilFilterImage from '@assets/generated_images/Product_oil_filter_4b453d0f.png';
 
 const allProducts = [
-  { id: '1', name: 'Premium Brake Pads Set', price: 89.99, image: brakePadsImage, inStock: true, discount: 15 },
   { id: '2', name: 'High Performance Air Filter', price: 45.99, image: airFilterImage, inStock: true },
   { id: '3', name: 'Iridium Spark Plugs (4-Pack)', price: 34.99, image: sparkPlugsImage, inStock: true, discount: 20 },
   { id: '4', name: 'LED Headlight Assembly', price: 189.99, image: headlightImage, inStock: false },
   { id: '5', name: 'Premium Car Battery 12V', price: 129.99, image: batteryImage, inStock: true },
   { id: '6', name: 'Synthetic Oil Filter', price: 24.99, image: oilFilterImage, inStock: true, discount: 10 },
-  { id: '7', name: 'Performance Brake Rotors', price: 149.99, image: brakePadsImage, inStock: true },
   { id: '8', name: 'Cabin Air Filter', price: 19.99, image: airFilterImage, inStock: true, discount: 25 },
 ];
 
 function Filters() {
   const [priceRange, setPriceRange] = useState([0, 200]);
-  
+
   return (
     <div className="space-y-6">
       <div>
@@ -78,14 +75,14 @@ export default function ProductListing() {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      
+
       <div className="container mx-auto px-4 py-8">
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold mb-2">Auto Parts</h1>
             <p className="text-muted-foreground">{allProducts.length} products found</p>
           </div>
-          
+
           <div className="flex items-center gap-4">
             <Select value={sortBy} onValueChange={setSortBy}>
               <SelectTrigger className="w-[200px]" data-testid="select-sort">
