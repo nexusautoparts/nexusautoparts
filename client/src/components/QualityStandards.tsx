@@ -76,13 +76,13 @@ export default function QualityStandards() {
         </div>
 
         {/* Pricing Section */}
-        <div className="bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900 rounded-2xl p-8 text-white">
-          <h3 className="text-2xl font-bold text-center mb-6">Starting Prices</h3>
-          <div className="flex flex-wrap justify-center gap-4 md:gap-8">
+        <div className="bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900 rounded-2xl p-10 text-white">
+          <h3 className="text-3xl font-bold text-center mb-8">Starting Prices</h3>
+          <div className="flex flex-wrap justify-center gap-6 md:gap-10">
             {pricing.map((item) => (
-              <div key={item.part} className="text-center px-4 py-3 bg-white/10 rounded-xl backdrop-blur-sm">
-                <p className="text-xl md:text-2xl font-bold text-primary">{item.price}</p>
-                <p className="text-sm text-zinc-300">{item.part}</p>
+              <div key={item.part} className="text-center px-6 py-4 bg-white/10 rounded-xl backdrop-blur-sm min-w-[120px]">
+                <p className="text-2xl md:text-3xl font-bold text-primary">{item.price}</p>
+                <p className="text-base text-zinc-300 mt-1">{item.part}</p>
               </div>
             ))}
           </div>

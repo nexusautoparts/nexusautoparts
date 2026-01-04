@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { MessageCircle, X, Phone, MessageSquare, ChevronRight, Send } from "lucide-react";
+import { useChatbot } from "@/context/ChatbotContext";
 
 // Mock Data from Reference
 const mockData = {
@@ -28,7 +29,7 @@ interface Message {
 }
 
 export default function Chatbot() {
-  const [isOpen, setIsOpen] = useState(false);
+  const { isOpen, openChatbot, closeChatbot, toggleChatbot } = useChatbot();
   const [currentStep, setCurrentStep] = useState<Step>('year');
   const [messages, setMessages] = useState<Message[]>([]);
   const [selections, setSelections] = useState({ year: '', make: '', model: '', part: '' });
@@ -58,66 +59,68 @@ export default function Chatbot() {
         timestamp: Date.now()
       }
     ]);
-    setCurrentStep('year');
-    setSelections({ year: '', make: '', model: '', part: '' });
   };
 
-  const getNextQuestion = (step: Step) => {
-    switch (step) {
-      case 'year': return 'What year is your vehicle?';
-      case 'make': return 'What is the make of your vehicle?';
-      case 'model': return 'What is the model of your vehicle?';
-      case 'part': return 'What part do you need?';
-      default: return '';
+  const getOptions = (): string[] => {
+    switch (currentStep) {
+      case 'year':
+        return mockData.years;
+      case 'make':
+        return mockData.makes[selections.year] || mockData.makes['2024'];
+      case 'model':
+        return mockData.models[selections.make] || [];
+      case 'part':
+        return mockData.parts;
+      default:
+        return [];
     }
   };
 
-  const getAvailableOptions = (step: Step) => {
-    switch (step) {
-      case 'year': return mockData.years;
-      case 'make': return mockData.makes[selections.year] || mockData.makes['2024']; // Fallback
-      case 'model': return mockData.models[selections.make] || mockData.models['Ford']; // Fallback
-      case 'part': return mockData.parts;
-      default: return [];
-    }
-  };
-
-  const handleOptionClick = (option: string) => {
-    const newMessage: Message = {
+  const handleSelect = (value: string) => {
+    const userMessage: Message = {
       id: Date.now().toString(),
       type: 'user',
-      content: option,
+      content: value,
       timestamp: Date.now()
     };
 
-    const newSelections = { ...selections, [currentStep]: option };
-    setSelections(newSelections);
+    const updatedMessages = [...messages, userMessage];
 
-    // Calculate new messages array to update state once
-    const updatedMessages = [...messages, newMessage];
+    let botResponse = '';
+    let nextStep: Step = currentStep;
 
-    let nextStep: Step = 'summary';
-    if (currentStep === 'year') nextStep = 'make';
-    else if (currentStep === 'make') nextStep = 'model';
-    else if (currentStep === 'model') nextStep = 'part';
-
-    if (nextStep === 'summary') {
-      updatedMessages.push({
-        id: (Date.now() + 1).toString(),
-        type: 'bot',
-        content: "Perfect! Here's a summary of your selection. How would you like to proceed?",
-        timestamp: Date.now() + 1
-      });
-      setCurrentStep('summary');
-    } else {
-      updatedMessages.push({
-        id: (Date.now() + 1).toString(),
-        type: 'bot',
-        content: getNextQuestion(nextStep),
-        timestamp: Date.now() + 1
-      });
-      setCurrentStep(nextStep);
+    switch (currentStep) {
+      case 'year':
+        setSelections({ ...selections, year: value });
+        botResponse = `Great! What is the make of your ${value} vehicle?`;
+        nextStep = 'make';
+        break;
+      case 'make':
+        setSelections({ ...selections, make: value });
+        botResponse = `Perfect! What model is your ${value}?`;
+        nextStep = 'model';
+        break;
+      case 'model':
+        setSelections({ ...selections, model: value });
+        botResponse = 'What part are you looking for?';
+        nextStep = 'part';
+        break;
+      case 'part':
+        setSelections({ ...selections, part: value });
+        botResponse = `Thank you! Here's a summary of your request:\n\n🚗 Vehicle: ${selections.year} ${selections.make} ${selections.model}\n🔧 Part: ${value}\n\nOur team will contact you shortly with a quote. You can also call us at 1-234-567-8900!`;
+        nextStep = 'summary';
+        break;
     }
+
+    setTimeout(() => {
+      setMessages([...updatedMessages, {
+        id: (Date.now() + 1).toString(),
+        type: 'bot',
+        content: botResponse,
+        timestamp: Date.now()
+      }]);
+      setCurrentStep(nextStep);
+    }, 400);
 
     setMessages(updatedMessages);
   };
@@ -128,15 +131,15 @@ export default function Chatbot() {
         @keyframes pulse {
           0% {
             transform: scale(0.95);
-            box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7);
+            box-shadow: 0 0 0 0 rgba(194, 30, 35, 0.7);
           }
           70% {
             transform: scale(1);
-            box-shadow: 0 0 0 15px rgba(220, 38, 38, 0);
+            box-shadow: 0 0 0 15px rgba(194, 30, 35, 0);
           }
           100% {
             transform: scale(0.95);
-            box-shadow: 0 0 0 0 rgba(220, 38, 38, 0);
+            box-shadow: 0 0 0 0 rgba(194, 30, 35, 0);
           }
         }
         @keyframes rotateShake {
@@ -160,101 +163,100 @@ export default function Chatbot() {
       {isOpen && (
         <div
           className="fixed inset-0 bg-black/60 backdrop-blur-[4px] z-50 transition-opacity"
-          onClick={() => setIsOpen(false)}
+          onClick={closeChatbot}
         />
       )}
 
       {/* Chat Modal */}
       {isOpen && (
-        <div className="fixed bottom-0 right-0 w-full h-full md:max-w-[384px] md:max-h-[512px] md:bottom-24 md:right-8 bg-[linear-gradient(to_bottom,rgba(20,20,20,0.95),rgba(30,10,10,0.95))] border border-[#A01822]/40 md:rounded-3xl shadow-[0_20px_40px_rgba(0,0,0,0.5)] flex flex-col z-[51] backdrop-blur-md overflow-hidden animate-in slide-in-from-bottom-10 fade-in duration-300 text-slate-100 font-sans ring-1 ring-[#A01822]/20">
+        <div className="fixed bottom-0 right-0 w-full h-full md:max-w-[384px] md:max-h-[512px] md:bottom-24 md:right-8 bg-[linear-gradient(to_bottom,rgba(20,20,20,0.95),rgba(30,10,10,0.95))] border border-[#c21e23]/40 md:rounded-3xl shadow-[0_20px_40px_rgba(0,0,0,0.5)] flex flex-col z-[51] backdrop-blur-md overflow-hidden animate-in slide-in-from-bottom-10 fade-in duration-300 text-slate-100 font-sans ring-1 ring-[#c21e23]/20">
 
           {/* Header */}
-          <div className="bg-[linear-gradient(to_right,#7f1d1d,#A01822)] p-4 flex items-center justify-between shrink-0 shadow-lg">
-            <h3 className="font-bold text-lg text-white flex items-center gap-2">
-              <MessageSquare className="w-5 h-5 opacity-90" />
-              Find Your Part
-            </h3>
+          <div className="flex items-center justify-between px-5 py-4 border-b border-slate-700/40 bg-black/20">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-[#c21e23] flex items-center justify-center text-white shadow">
+                <MessageCircle className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="font-bold text-base">Auto Parts Finder</h3>
+                <p className="text-sm text-slate-400/80">Find your perfect part now</p>
+              </div>
+            </div>
             <button
-              onClick={() => setIsOpen(false)}
-              className="text-white hover:bg-white/10 p-2 rounded-lg transition-colors"
+              onClick={closeChatbot}
+              className="w-8 h-8 rounded-full bg-slate-700/40 hover:bg-[#c21e23] text-slate-400 hover:text-white flex items-center justify-center transition"
             >
-              <X className="w-6 h-6" />
+              <X className="w-4 h-4" />
             </button>
           </div>
 
-          {/* Chat Container */}
-          <div className="flex-1 flex flex-col min-h-0 overflow-hidden bg-[linear-gradient(to_bottom,rgba(0,0,0,0.4),rgba(0,0,0,0.2))]">
-
-            {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-4">
-              {messages.map((msg) => (
-                <div key={msg.id} className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div
-                    className={`max-w-[85%] px-4 py-3 rounded-2xl text-sm shadow-md leading-relaxed
-                    ${msg.type === 'user'
-                        ? 'bg-[linear-gradient(135deg,#A01822,#7f1d1d)] text-white rounded-tr-sm shadow-[0_4px_12px_rgba(160,24,34,0.3)]'
-                        : 'bg-zinc-800 text-zinc-200 rounded-tl-sm shadow-sm border border-white/5'}`}
-                  >
+          {/* Messages */}
+          <div className="flex-1 overflow-y-auto p-5 space-y-4 scroll-smooth">
+            {messages.map((msg) => (
+              <div
+                key={msg.id}
+                className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}
+              >
+                <div
+                  className={`max-w-[80%] rounded-2xl px-4 py-2 text-sm shadow ${msg.type === 'user'
+                      ? 'bg-[#c21e23] text-white rounded-br-none'
+                      : 'bg-slate-800/70 text-slate-100 rounded-bl-none border border-slate-700/50'
+                    }`}
+                >
+                  <p className="whitespace-pre-line">
                     {msg.content}
-                  </div>
+                  </p>
                 </div>
-              ))}
-              <div ref={messagesEndRef} />
-            </div>
+              </div>
+            ))}
+            <div ref={messagesEndRef} />
+          </div>
 
-            {/* Options Area */}
-            {currentStep !== 'summary' ? (
-              <div className="shrink-0 border-t border-white/10 bg-black/40 backdrop-blur-md p-4 max-h-60 overflow-y-auto">
-                <div className="flex flex-col gap-2">
-                  {getAvailableOptions(currentStep).map((opt) => (
-                    <button
-                      key={opt}
-                      onClick={() => handleOptionClick(opt)}
-                      className="w-full p-3 text-left text-sm border border-white/10 rounded-xl bg-white/5 text-zinc-300 hover:bg-[#A01822] hover:text-white hover:border-[#A01822] transition-all duration-200 font-medium flex items-center justify-between group"
-                    >
-                      {opt}
-                      <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
-                    </button>
-                  ))}
-                </div>
-              </div>
-            ) : (
-              <div className="p-4 border-t border-[#A01822]/30 bg-black/60 backdrop-blur-md">
-                <p className="text-[11px] font-bold uppercase text-[#A01822] mb-3 tracking-wider">Your Selection</p>
-                <div className="space-y-2 mb-4">
-                  {Object.entries(selections).map(([key, value]) => (
-                    <div key={key} className="flex justify-between items-center p-2.5 rounded-lg bg-white/5 border border-white/10 text-[13px]">
-                      <span className="capitalize text-zinc-400 font-medium">{key}</span>
-                      <span className="font-semibold text-white">{value}</span>
-                    </div>
-                  ))}
-                </div>
-                <div className="flex flex-col gap-3">
+          {/* Options */}
+          {currentStep !== 'summary' && (
+            <div className="p-4 border-t border-slate-700/40 bg-black/20">
+              <div className="flex flex-wrap gap-2 max-h-32 overflow-y-auto">
+                {getOptions().map((option) => (
                   <button
-                    onClick={() => alert("Live chat started!")}
-                    className="w-full p-3.5 rounded-xl text-sm font-bold flex items-center justify-center gap-2 bg-[linear-gradient(to_right,#A01822,#7f1d1d)] text-white hover:shadow-[0_8px_20px_rgba(160,24,34,0.4)] transition-all border border-white/10 hover:scale-[1.02] active:scale-[0.98]"
+                    key={option}
+                    onClick={() => handleSelect(option)}
+                    className="px-3 py-1.5 rounded-full bg-slate-700/40 hover:bg-[#c21e23] text-sm text-slate-200 hover:text-white transition border border-slate-600/30 hover:border-[#c21e23] flex items-center gap-1"
                   >
-                    <MessageSquare className="w-4 h-4" /> Start Live Chat
+                    {option}
+                    <ChevronRight className="w-3 h-3 opacity-60" />
                   </button>
-                  <a
-                    href="tel:8662122276"
-                    className="w-full p-3.5 rounded-xl text-sm font-bold flex items-center justify-center gap-2 bg-white text-[#A01822] hover:bg-zinc-100 hover:shadow-lg transition-all"
-                  >
-                    <Phone className="w-4 h-4 fill-current" /> Call (866) 212-2276
-                  </a>
-                </div>
+                ))}
               </div>
-            )}
+            </div>
+          )}
+
+          {/* Contact Bar */}
+          <div className="px-4 py-3 border-t border-slate-700/40 bg-black/30 flex items-center gap-3">
+            <a
+              href="tel:12345678900"
+              className="flex-1 flex items-center justify-center gap-2 py-2 rounded-lg bg-[#c21e23] hover:bg-[#a01822] text-white text-sm font-medium transition"
+            >
+              <Phone className="w-4 h-4" />
+              Call Us
+            </a>
+            <a
+              href="sms:12345678900"
+              className="flex-1 flex items-center justify-center gap-2 py-2 rounded-lg bg-slate-700/50 hover:bg-slate-600/50 text-slate-200 text-sm font-medium transition"
+            >
+              <MessageSquare className="w-4 h-4" />
+              Text Us
+            </a>
           </div>
         </div>
       )}
 
       {/* Floating Button */}
       <button
-        onClick={() => setIsOpen(true)}
-        className={`fixed bottom-[34px] right-[29px] w-16 h-16 rounded-full bg-[linear-gradient(135deg,#A01822_0%,#7f1d1d_100%)] text-white flex items-center justify-center shadow-[0_10px_25px_rgba(160,24,34,0.6)] z-40 transition-all duration-300 hover:scale-110 hover:shadow-[0_15px_35px_rgba(160,24,34,0.85)] border-4 border-white/10 ${!isOpen ? 'chat-btn-pulse' : 'hidden'}`}
+        onClick={toggleChatbot}
+        className={`fixed bottom-8 right-8 w-16 h-16 rounded-full bg-[#c21e23] text-white flex items-center justify-center shadow-lg z-40 transition-all duration-300 hover:scale-110 hover:bg-[#a01822] border-4 border-white/20 ${!isOpen ? 'chat-btn-pulse' : ''}`}
+        data-testid="button-chatbot"
       >
-        <MessageCircle className="w-8 h-8 drop-shadow-md" />
+        {isOpen ? <X className="w-7 h-7" /> : <MessageCircle className="w-7 h-7" />}
       </button>
     </>
   );

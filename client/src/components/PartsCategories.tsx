@@ -11,15 +11,15 @@ import usedDiff from '@/assets/images/parts/used-differential.webp';
 import usedAxle from '@/assets/images/parts/used-axel-shaft.webp';
 
 const categories = [
-  { name: 'Used Engine', image: usedEngine, description: 'High-quality tested engines', href: '/used-engine' },
-  { name: 'Used Transmission', image: usedTransmission, description: 'Smooth shifting transmissions', href: '/products' },
-  { name: 'Used Steering Column', image: usedSteering, description: 'Precise steering control', href: '/products' },
-  { name: 'Used Instrument Cluster', image: usedCluster, description: 'Accurate gauges and displays', href: '/products' },
-  { name: 'Used ABS Module', image: usedAbs, description: 'Reliable braking systems', href: '/products' },
-  { name: 'Used Transfer Case', image: usedTransfer, description: 'Durable transfer cases', href: '/products' },
-  { name: 'Used Turbo Charger', image: usedTurbo, description: 'Boost power and efficiency', href: '/products' },
-  { name: 'Used Differential', image: usedDiff, description: 'Smooth power delivery', href: '/products' },
-  { name: 'Used Axle Shaft', image: usedAxle, description: 'Strong and durable shafts', href: '/products' },
+  { name: 'Engine', image: usedEngine, description: 'High-quality tested engines', href: '/used-engine' },
+  { name: 'Transmission', image: usedTransmission, description: 'Smooth shifting transmissions', href: '/products' },
+  { name: 'Steering Column', image: usedSteering, description: 'Precise steering control', href: '/products' },
+  { name: 'Instrument Cluster', image: usedCluster, description: 'Accurate gauges and displays', href: '/products' },
+  { name: 'ABS Module', image: usedAbs, description: 'Reliable braking systems', href: '/products' },
+  { name: 'Transfer Case', image: usedTransfer, description: 'Durable transfer cases', href: '/products' },
+  { name: 'Turbo Charger', image: usedTurbo, description: 'Boost power and efficiency', href: '/products' },
+  { name: 'Differential', image: usedDiff, description: 'Smooth power delivery', href: '/products' },
+  { name: 'Axle Shaft', image: usedAxle, description: 'Strong and durable shafts', href: '/products' },
 ];
 
 export default function PartsCategories() {

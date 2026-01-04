@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Phone, MessageSquare, X } from "lucide-react";
 
 export default function CallWidget() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true); // Default open on page load
 
   return (
     <>
@@ -27,13 +27,6 @@ export default function CallWidget() {
       {/* Popup Modal */}
       {isOpen && (
         <div className="fixed bottom-28 left-6 bg-zinc-900 rounded-2xl p-5 shadow-2xl z-50 w-72 border border-green-500/30 animate-in slide-in-from-bottom-4 fade-in duration-200">
-          <button
-            onClick={() => setIsOpen(false)}
-            className="absolute -top-2 -right-2 w-7 h-7 bg-green-600 rounded-full flex items-center justify-center text-white hover:bg-green-700 transition-colors"
-          >
-            <X className="w-4 h-4" />
-          </button>
-
           <h3 className="text-xl font-bold text-white mb-1">Call Us Now!</h3>
           <p className="text-zinc-400 text-sm mb-4">Get Free Shipping</p>
 
@@ -48,14 +41,14 @@ export default function CallWidget() {
           <div className="flex gap-3">
             <a
               href="tel:12345678900"
-              className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-full border-2 border-green-500 text-green-500 font-semibold hover:bg-green-500 hover:text-white transition-all"
+              className="flex-1 flex items-center justify-center gap-2 py-2 rounded-md border border-green-500 text-green-500 font-medium hover:bg-green-500 hover:text-white transition-all"
             >
               <Phone className="w-4 h-4" />
               Call
             </a>
             <a
               href="sms:12345678900"
-              className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-full border-2 border-green-500 text-green-500 font-semibold hover:bg-green-500 hover:text-white transition-all"
+              className="flex-1 flex items-center justify-center gap-2 py-2 rounded-md bg-green-600 text-white font-medium hover:bg-green-700 transition-all"
             >
               <MessageSquare className="w-4 h-4" />
               Message

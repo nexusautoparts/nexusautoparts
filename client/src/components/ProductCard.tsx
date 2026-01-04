@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { useChatbot } from '@/context/ChatbotContext';
 
 export interface ProductCardProps {
     id: string;
@@ -11,7 +11,9 @@ export interface ProductCardProps {
     discount?: number;
 }
 
-export default function ProductCard({ name, image, inStock }: ProductCardProps) {
+export default function ProductCard({ name, image }: ProductCardProps) {
+    const { openChatbot } = useChatbot();
+
     return (
         <Card className="hover-elevate overflow-hidden flex flex-col h-full">
             <div className="relative aspect-square bg-white p-4">
@@ -21,11 +23,6 @@ export default function ProductCard({ name, image, inStock }: ProductCardProps) 
                 <h3 className="font-semibold text-base mb-2 line-clamp-2" data-testid="text-product-name">
                     {name}
                 </h3>
-                {!inStock && (
-                    <Badge variant="secondary">
-                        Out of Stock
-                    </Badge>
-                )}
             </CardContent>
             <CardFooter className="p-4 pt-0 flex gap-2">
                 <Button
@@ -37,8 +34,8 @@ export default function ProductCard({ name, image, inStock }: ProductCardProps) 
                 </Button>
                 <Button
                     className="flex-1 bg-ring hover:bg-ring/90 text-white border-0"
-                    disabled={!inStock}
                     data-testid="button-buy-now"
+                    onClick={openChatbot}
                 >
                     Buy Now
                 </Button>

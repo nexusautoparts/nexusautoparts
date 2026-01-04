@@ -1,4 +1,3 @@
-import { Card, CardContent } from '@/components/ui/card';
 import frame1 from '@/assets/images/Frame-1.png'; // Volvo
 import frame2 from '@/assets/images/Frame-2.png'; // Chevrolet
 import frame3 from '@/assets/images/Frame-3.png'; // Honda
@@ -24,8 +23,11 @@ const brands = [
 ];
 
 export default function Brands() {
+    // Duplicate the array for seamless infinite scroll
+    const duplicatedBrands = [...brands, ...brands];
+
     return (
-        <section className="py-12 bg-background">
+        <section className="py-12 bg-background overflow-hidden">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-10">
                     <h2 className="text-3xl md:text-4xl font-bold mb-3">Brands</h2>
@@ -33,21 +35,39 @@ export default function Brands() {
                         At Nexus Auto, we offer high quality used parts sourced from some of the most trusted and best-selling automotive brands in the industry.
                     </p>
                 </div>
+            </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-                    {brands.map((brand) => (
-                        <Card
-                            key={brand.name}
-                            className="hover:shadow-md transition-shadow border-none shadow-sm flex items-center justify-center p-6 bg-white"
+            {/* Auto-sliding carousel */}
+            <div className="relative">
+                <style>{`
+          @keyframes slide {
+            0% {
+              transform: translateX(0);
+            }
+            100% {
+              transform: translateX(-50%);
+            }
+          }
+          .brand-slider {
+            animation: slide 30s linear infinite;
+          }
+          .brand-slider:hover {
+            animation-play-state: paused;
+          }
+        `}</style>
+
+                <div className="brand-slider flex gap-6 w-max">
+                    {duplicatedBrands.map((brand, index) => (
+                        <div
+                            key={`${brand.name}-${index}`}
+                            className="flex-shrink-0 w-48 h-32 bg-white rounded-lg shadow-sm flex items-center justify-center p-2 hover:shadow-md transition-shadow"
                         >
-                            <CardContent className="p-0 flex items-center justify-center w-full h-32">
-                                <img
-                                    src={brand.image}
-                                    alt={brand.name}
-                                    className="max-h-24 w-auto object-contain"
-                                />
-                            </CardContent>
-                        </Card>
+                            <img
+                                src={brand.image}
+                                alt={brand.name}
+                                className="max-h-28 w-auto object-contain"
+                            />
+                        </div>
                     ))}
                 </div>
             </div>
