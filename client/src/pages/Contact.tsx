@@ -57,8 +57,8 @@ export default function Contact() {
                                         <Mail className="w-6 h-6 text-blue-600" />
                                     </div>
                                     <h3 className="font-bold text-slate-900 mb-2">Email Us</h3>
-                                    <a href="mailto:support@nexusautoparts.com" className="text-blue-600 font-medium hover:underline">
-                                        support@nexusautoparts.com
+                                    <a href="mailto:sales@nexusautopartsus.com" className="text-blue-600 font-medium hover:underline">
+                                        sales@nexusautopartsus.com
                                     </a>
                                     <p className="text-slate-500 text-sm mt-2">Response within 24 hours</p>
                                 </CardContent>
@@ -83,23 +83,7 @@ export default function Contact() {
                             </CardContent>
                         </Card>
 
-                        <Card className="border-none shadow-lg">
-                            <CardContent className="p-6">
-                                <div className="flex items-start gap-4">
-                                    <div className="bg-green-100 w-12 h-12 rounded-full flex items-center justify-center shrink-0">
-                                        <MapPin className="w-6 h-6 text-green-600" />
-                                    </div>
-                                    <div>
-                                        <h3 className="font-bold text-slate-900 mb-2">Mailing Address</h3>
-                                        <p className="text-slate-600">
-                                            Nexus Auto Parts<br />
-                                            Customer Service Department<br />
-                                            United States
-                                        </p>
-                                    </div>
-                                </div>
-                            </CardContent>
-                        </Card>
+
                     </div>
 
                     {/* Contact Form */}

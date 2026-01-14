@@ -48,7 +48,7 @@ export default function Payment() {
                             <h2 className="bg-gray-200 text-sm font-bold uppercase px-2 py-1 mb-4 inline-block border border-gray-400">2. Payment Method</h2>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="col-span-2">
-                                    <label className="block text-xs uppercase font-bold mb-1">Cardholder Name</label>
+                                    <label className="block text-xs uppercase font-bold mb-1">Cardholder Name *</label>
                                     <input
                                         type="text"
                                         required
@@ -68,7 +68,7 @@ export default function Payment() {
                                 </div>
                                 <div className="grid grid-cols-2 gap-4">
                                     <div>
-                                        <label className="block text-xs uppercase font-bold mb-1">Expiry</label>
+                                        <label className="block text-xs uppercase font-bold mb-1">Expiry *</label>
                                         <input
                                             type="text"
                                             required
@@ -77,7 +77,7 @@ export default function Payment() {
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-xs uppercase font-bold mb-1">CVV</label>
+                                        <label className="block text-xs uppercase font-bold mb-1">CVV *</label>
                                         <input
                                             type="text"
                                             required
@@ -119,7 +119,7 @@ export default function Payment() {
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-xs uppercase font-bold mb-1">Zip Code</label>
+                                        <label className="block text-xs uppercase font-bold mb-1">Zip Code *</label>
                                         <input
                                             type="text"
                                             required

@@ -26,14 +26,36 @@ export default function HeroSearchTool({ defaultPart = '' }: HeroSearchToolProps
         setSelectedModel(''); // Reset model when make changes
     };
 
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
     const handleSearchClick = () => {
         setIsCollectingInfo(true);
     };
 
-    const handleContactSubmit = (e: React.FormEvent) => {
+    const handleContactSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setIsCollectingInfo(false);
-        setIsSubmitted(true);
+        setIsSubmitting(true);
+
+        try {
+            await fetch("/api/leads", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    name: contactInfo.name,
+                    email: contactInfo.email,
+                    phone: contactInfo.phone,
+                    vehicle: `${selectedYear} ${selectedMake} ${selectedModel}`.trim(),
+                    part: selectedPart,
+                    message: "Lead from Hero Search Tool"
+                })
+            });
+        } catch (error) {
+            console.error("Failed to submit lead", error);
+        } finally {
+            setIsSubmitting(false);
+            setIsCollectingInfo(false);
+            setIsSubmitted(true);
+        }
     };
 
     if (isSubmitted) {
@@ -115,9 +137,10 @@ export default function HeroSearchTool({ defaultPart = '' }: HeroSearchToolProps
                     <div className="pt-2">
                         <Button
                             type="submit"
+                            disabled={isSubmitting}
                             className="w-full bg-black text-white hover:bg-black/80 font-bold h-12 text-base rounded-full"
                         >
-                            GET QUOTE
+                            {isSubmitting ? "Sending..." : "GET QUOTE"}
                         </Button>
                         <button
                             type="button"

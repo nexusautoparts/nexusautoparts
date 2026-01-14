@@ -103,14 +103,14 @@ export default function HelpCenter() {
                         </Card>
                     </a>
 
-                    <a href="mailto:support@nexusautoparts.com" className="block">
+                    <a href="mailto:sales@nexusautopartsus.com" className="block">
                         <Card className="border-none shadow-lg hover:shadow-xl transition-shadow h-full">
                             <CardContent className="p-6 text-center">
                                 <div className="bg-blue-100 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4">
                                     <Mail className="w-7 h-7 text-blue-600" />
                                 </div>
                                 <h3 className="font-bold text-slate-900 mb-1">Email Support</h3>
-                                <p className="text-blue-600 font-medium">support@nexusautoparts.com</p>
+                                <p className="text-blue-600 font-medium">sales@nexusautopartsus.com</p>
                                 <p className="text-slate-500 text-sm mt-1">Response within 24hrs</p>
                             </CardContent>
                         </Card>

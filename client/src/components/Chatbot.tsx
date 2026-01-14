@@ -121,8 +121,30 @@ export default function Chatbot() {
     setMessages(updatedMessages);
   };
 
-  const handleContactSubmit = (e: React.FormEvent) => {
+  const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Optimistic UI update or Show loading? 
+    // Let's show a "Sending..." message or just proceed. 
+    // Given the chatbot flow, let's send it effectively.
+
+    try {
+      await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: contactInfo.name,
+          email: contactInfo.email,
+          phone: contactInfo.phone,
+          vehicle: `${selections.year} ${selections.make} ${selections.model}`.trim(),
+          part: selections.part,
+          message: "Lead from Chatbot"
+        })
+      });
+    } catch (error) {
+      console.error("Failed to submit lead", error);
+    }
+
     const summaryMsg = `Thank you! Here's a summary of your request:\n\n🚗 Vehicle: ${selections.year} ${selections.make} ${selections.model}\n🔧 Part: ${selections.part}\n\nOur team will contact you shortly with a quote. You can also call us at (866) 212-2276!`;
 
     setMessages([...messages, {

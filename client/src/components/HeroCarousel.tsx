@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import HeroSearchTool from './HeroSearchTool';
-import heroBanner1 from '@assets/generated_images/Hero_banner_brake_parts_31ee722a.png';
-import heroBanner2 from '@assets/generated_images/Hero_banner_filters_sale_31972f9d.png';
-import heroBanner3 from '@assets/generated_images/Hero_banner_suspension_parts_993ab951.png';
+import heroBanner1 from '@/assets/generated_images/clean_hero_engine.png';
+import heroBanner2 from '@/assets/generated_images/clean_hero_transmission.png';
+import heroBanner3 from '@/assets/generated_images/clean_hero_suspension.png';
 
 const slides = [
   {

@@ -39,8 +39,6 @@ export default function Footer() {
                     href={link.href}
                     className="text-muted-foreground hover:text-foreground transition-colors"
                     data-testid={`link-footer-${link.name.toLowerCase().replace(/\s+/g, '-')}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
                   >
                     {link.name}
                   </a>
@@ -58,8 +56,6 @@ export default function Footer() {
                     href={link.href}
                     className="text-muted-foreground hover:text-foreground transition-colors"
                     data-testid={`link-footer-${link.name.toLowerCase().replace(/\s+/g, '-')}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
                   >
                     {link.name}
                   </a>
@@ -77,8 +73,6 @@ export default function Footer() {
                     href={link.href}
                     className="text-muted-foreground hover:text-foreground transition-colors"
                     data-testid={`link-footer-${link.name.toLowerCase().replace(/\s+/g, '-')}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
                   >
                     {link.name}
                   </a>
@@ -87,32 +81,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div>
-            <h3 className="font-bold text-sm sm:text-lg mb-3 sm:mb-4">Connect With Us</h3>
-            <div className="flex gap-2 sm:gap-3 mb-4 sm:mb-6">
-              <Button variant="outline" size="icon" data-testid="button-facebook">
-                <Facebook className="w-5 h-5" />
-              </Button>
-              <Button variant="outline" size="icon" data-testid="button-instagram">
-                <Instagram className="w-5 h-5" />
-              </Button>
-              <Button variant="outline" size="icon" data-testid="button-youtube">
-                <Youtube className="w-5 h-5" />
-              </Button>
-              <Button variant="outline" size="icon" data-testid="button-whatsapp">
-                <MessageCircle className="w-5 h-5" />
-              </Button>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-2 text-sm sm:text-base">Newsletter</h4>
-              <div className="flex gap-1 sm:gap-2">
-                <Input placeholder="Email" type="email" className="min-w-0 flex-1 text-sm" data-testid="input-newsletter" />
-                <Button className="bg-ring hover:bg-ring/90 text-white border-0 shrink-0" data-testid="button-subscribe">
-                  <Mail className="w-4 h-4" />
-                </Button>
-              </div>
-            </div>
-          </div>
+
         </div>
 
         <div className="border-t pt-8">

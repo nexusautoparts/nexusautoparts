@@ -44,8 +44,6 @@ export default function Navigation() {
               <a
                 key={category}
                 href={`/${category.toLowerCase().replace(/\s+/g, "-")}`}
-                target="_blank"
-                rel="noopener noreferrer"
               >
                 <Button
                   variant="ghost"
@@ -71,7 +69,7 @@ export default function Navigation() {
           </div>
 
           <div className="flex items-center gap-2">
-            <a href="/payment" target="_blank" rel="noopener noreferrer">
+            <a href="/payment">
               <Button
                 variant="default"
                 size="default"
@@ -100,8 +98,6 @@ export default function Navigation() {
                     <a
                       key={category}
                       href={`/${category.toLowerCase().replace(/\s+/g, "-")}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
                     >
                       <Button
                         variant="ghost"

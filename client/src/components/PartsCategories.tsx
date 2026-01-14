@@ -63,8 +63,6 @@ export default function PartsCategories() {
             <a
               key={category.name}
               href={category.href}
-              target="_blank"
-              rel="noopener noreferrer"
               className="block h-full group"
             >
               <div
