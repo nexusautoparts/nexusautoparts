@@ -44,7 +44,10 @@ export default function HeroSearchTool({ defaultPart = '' }: HeroSearchToolProps
                     name: contactInfo.name,
                     email: contactInfo.email,
                     phone: contactInfo.phone,
-                    vehicle: `${selectedYear} ${selectedMake} ${selectedModel}`.trim(),
+                    year: selectedYear,
+                    make: selectedMake,
+                    model: selectedModel,
+                    vin: vin,
                     part: selectedPart,
                     message: "Lead from Hero Search Tool"
                 })

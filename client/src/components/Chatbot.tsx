@@ -136,7 +136,9 @@ export default function Chatbot() {
           name: contactInfo.name,
           email: contactInfo.email,
           phone: contactInfo.phone,
-          vehicle: `${selections.year} ${selections.make} ${selections.model}`.trim(),
+          year: selections.year,
+          make: selections.make,
+          model: selections.model,
           part: selections.part,
           message: "Lead from Chatbot"
         })

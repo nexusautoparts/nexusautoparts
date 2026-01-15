@@ -53,8 +53,11 @@ export interface LeadData {
     Name: string;
     Email: string;
     Phone: string;
-    Vehicle: string;
+    Year: string;
+    Make: string;
+    Model: string;
     Part: string;
+    Vin: string;
     Message: string;
     Date: string;
 }
@@ -83,14 +86,17 @@ export async function addLeadToExcel(lead: LeadData) {
         const tableName = process.env.EXCEL_TABLE_NAME || "LeadsTable";
 
         // Construct the row data matching expected columns
+        // Columns: Name, Email, Phone, Part Year, Make, Model, Part, VIN Number, Date
         const rowData = [
             [
                 lead.Name,
                 lead.Email,
                 lead.Phone,
-                lead.Vehicle,
+                lead.Year,
+                lead.Make,
+                lead.Model,
                 lead.Part,
-                lead.Message,
+                lead.Vin,
                 lead.Date
             ]
         ];

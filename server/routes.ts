@@ -7,7 +7,7 @@ export async function registerRoutes(app: Express): Promise<void> {
 
   app.post("/api/leads", async (req, res) => {
     try {
-      const { name, email, phone, vehicle, part, message } = req.body;
+      const { name, email, phone, year, make, model, vin, part, message } = req.body;
 
       // Basic validation
       if (!name || !email || !phone) {
@@ -19,8 +19,11 @@ export async function registerRoutes(app: Express): Promise<void> {
         Name: name,
         Email: email,
         Phone: phone,
-        Vehicle: vehicle || "N/A",
+        Year: year || "N/A",
+        Make: make || "N/A",
+        Model: model || "N/A",
         Part: part || "N/A",
+        Vin: vin || "N/A",
         Message: message || "N/A",
         Date: new Date().toLocaleString()
       });

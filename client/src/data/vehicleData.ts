@@ -57,7 +57,7 @@ export const vehicleData = {
     } as Record<string, string[]>,
 
     // Generate years from 1999 to current year
-    years: Array.from({ length: new Date().getFullYear() - 1999 + 1 }, (_, i) => (new Date().getFullYear() - i).toString()),
+    years: Array.from({ length: new Date().getFullYear() - 1981 + 1 }, (_, i) => (new Date().getFullYear() - i).toString()),
 
     // Parts we offer
     parts: [
