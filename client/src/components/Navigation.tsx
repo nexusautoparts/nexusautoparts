@@ -69,7 +69,7 @@ export default function Navigation() {
           </div>
 
           <div className="flex items-center gap-2">
-            <a href="/payment">
+            <a href="/payment" style={{ display: 'none' }}>
               <Button
                 variant="default"
                 size="default"
