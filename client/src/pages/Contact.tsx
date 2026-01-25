@@ -6,8 +6,44 @@ import { Textarea } from "@/components/ui/textarea";
 import { Phone, Mail, MapPin, Clock, MessageSquare } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import { useState } from "react";
+import { useLocation } from "wouter";
 
 export default function Contact() {
+    const [, setLocation] = useLocation();
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        vehicleInfo: '',
+        message: ''
+    });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+        try {
+            await fetch("/api/leads", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    name: `${formData.firstName} ${formData.lastName}`,
+                    email: formData.email,
+                    phone: formData.phone,
+                    part: formData.vehicleInfo, // Using vehicle info as 'part' or generic context
+                    message: formData.message + " (Vehicle: " + formData.vehicleInfo + ")"
+                })
+            });
+            setLocation('/thank-you');
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
     return (
         <div className="min-h-screen bg-neutral-50 font-sans text-slate-800 overflow-x-hidden w-full max-w-full">
             <Navigation />
@@ -22,8 +58,8 @@ export default function Contact() {
                     <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto">
                         We're here to help you find the right part
                     </p>
-                </div>
-            </section>
+                </div >
+            </section >
 
             <main className="w-full px-4 py-12 lg:py-16 max-w-6xl mx-auto">
                 <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
@@ -96,27 +132,60 @@ export default function Contact() {
                                 <div className="grid sm:grid-cols-2 gap-4">
                                     <div className="space-y-2">
                                         <label className="text-sm font-medium text-slate-700">First Name *</label>
-                                        <Input placeholder="John" />
+                                        <Input
+                                            placeholder="John"
+                                            value={formData.firstName}
+                                            onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                                            required
+                                        />
                                     </div>
                                     <div className="space-y-2">
                                         <label className="text-sm font-medium text-slate-700">Last Name *</label>
-                                        <Input placeholder="Doe" />
+                                        <Input
+                                            placeholder="Doe"
+                                            value={formData.lastName}
+                                            onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                                            required
+                                        />
                                     </div>
                                 </div>
 
                                 <div className="space-y-2">
                                     <label className="text-sm font-medium text-slate-700">Email Address *</label>
-                                    <Input type="email" placeholder="john@example.com" />
+                                    <Input
+                                        type="email"
+                                        placeholder="john@example.com"
+                                        value={formData.email}
+                                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                        required
+                                    />
                                 </div>
 
                                 <div className="space-y-2">
                                     <label className="text-sm font-medium text-slate-700">Phone Number</label>
-                                    <Input type="tel" placeholder="(555) 123-4567" />
+                                    <Input
+                                        type="tel"
+                                        placeholder="(555) 123-4567"
+                                        value={formData.phone}
+                                        onChange={(e) => {
+                                            const input = e.target.value.replace(/\D/g, '').slice(0, 10);
+                                            const formatted = input.length === 0 ? '' :
+                                                input.length <= 3 ? input :
+                                                    input.length <= 6 ? `(${input.slice(0, 3)}) ${input.slice(3)}` :
+                                                        `(${input.slice(0, 3)}) ${input.slice(3, 6)}-${input.slice(6)}`;
+                                            setFormData({ ...formData, phone: formatted });
+                                        }}
+                                        required
+                                    />
                                 </div>
 
                                 <div className="space-y-2">
                                     <label className="text-sm font-medium text-slate-700">Vehicle Info (Year, Make, Model)</label>
-                                    <Input placeholder="e.g., 2018 Ford F-150" />
+                                    <Input
+                                        placeholder="e.g., 2018 Ford F-150"
+                                        value={formData.vehicleInfo}
+                                        onChange={(e) => setFormData({ ...formData, vehicleInfo: e.target.value })}
+                                    />
                                 </div>
 
                                 <div className="space-y-2">
@@ -124,11 +193,18 @@ export default function Contact() {
                                     <Textarea
                                         placeholder="Tell us about the part you're looking for or any questions you have..."
                                         className="min-h-[120px]"
+                                        value={formData.message}
+                                        onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                                        required
                                     />
                                 </div>
 
-                                <Button className="w-full bg-primary hover:bg-primary/90 py-3 text-base font-bold">
-                                    Send Message
+                                <Button
+                                    className="w-full bg-primary hover:bg-primary/90 py-3 text-base font-bold"
+                                    onClick={handleSubmit}
+                                    disabled={isSubmitting}
+                                >
+                                    {isSubmitting ? "Sending..." : "Send Message"}
                                 </Button>
 
                                 <p className="text-xs text-slate-500 text-center">
@@ -160,6 +236,6 @@ export default function Contact() {
             </main>
 
             <Footer />
-        </div>
+        </div >
     );
 }

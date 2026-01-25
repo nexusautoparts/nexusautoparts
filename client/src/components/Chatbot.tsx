@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useMemo } from "react";
+import { useLocation } from "wouter";
 import { MessageCircle, X, Phone, MessageSquare, ChevronRight } from "lucide-react";
 import { useChatbot } from "@/context/ChatbotContext";
 import { getMakes, getModels, getYears, getParts } from "@/data/vehicleData";
@@ -14,6 +15,7 @@ interface Message {
 
 export default function Chatbot() {
   const { isOpen, closeChatbot, toggleChatbot } = useChatbot();
+  const [, setLocation] = useLocation();
   const [currentStep, setCurrentStep] = useState<Step>('year');
   const [messages, setMessages] = useState<Message[]>([]);
   const [selections, setSelections] = useState({ year: '', make: '', model: '', part: '' });
@@ -147,15 +149,11 @@ export default function Chatbot() {
       console.error("Failed to submit lead", error);
     }
 
-    const summaryMsg = `Thank you! Here's a summary of your request:\n\n🚗 Vehicle: ${selections.year} ${selections.make} ${selections.model}\n🔧 Part: ${selections.part}\n\nOur team will contact you shortly with a quote. You can also call us at 866-317-1665!`;
+    // Redirect to Thank You page
+    setLocation('/thank-you');
 
-    setMessages([...messages, {
-      id: Date.now().toString(),
-      type: 'bot',
-      content: summaryMsg,
-      timestamp: Date.now()
-    }]);
-    setCurrentStep('summary');
+    // Close chatbot
+    closeChatbot();
   };
 
   const resetChat = () => {
@@ -241,7 +239,14 @@ export default function Chatbot() {
                   required
                   className="w-full bg-slate-800/50 border border-slate-600/50 rounded-lg px-3 py-2 text-sm text-white placeholder:text-slate-400 focus:outline-none focus:border-[#c21e23]"
                   value={contactInfo.phone}
-                  onChange={(e) => setContactInfo({ ...contactInfo, phone: e.target.value })}
+                  onChange={(e) => {
+                    const input = e.target.value.replace(/\D/g, '').slice(0, 10);
+                    const formatted = input.length === 0 ? '' :
+                      input.length <= 3 ? input :
+                        input.length <= 6 ? `(${input.slice(0, 3)}) ${input.slice(3)}` :
+                          `(${input.slice(0, 3)}) ${input.slice(3, 6)}-${input.slice(6)}`;
+                    setContactInfo({ ...contactInfo, phone: formatted });
+                  }}
                 />
                 <button
                   type="submit"

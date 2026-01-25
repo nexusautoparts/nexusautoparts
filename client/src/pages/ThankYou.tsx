@@ -1,32 +1,34 @@
-import { Link } from "wouter";
+import { Button } from "@/components/ui/button";
+import { Phone } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import { Button } from "@/components/ui/button";
-import { CheckCircle } from "lucide-react";
 
 export default function ThankYou() {
     return (
-        <div className="min-h-screen bg-neutral-50 font-sans text-slate-800">
+        <div className="min-h-screen bg-neutral-50 font-sans text-slate-800 flex flex-col">
             <Navigation />
 
-            <main className="flex items-center justify-center min-h-[60vh] px-4">
-                <div className="bg-white p-8 md:p-12 rounded-xl shadow-lg border border-slate-100 max-w-lg w-full text-center">
-                    <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-100 text-green-600 mb-6">
-                        <CheckCircle className="w-10 h-10" />
-                    </div>
+            <main className="flex-grow flex items-center justify-center py-16 px-4">
+                <div className="max-w-3xl mx-auto text-center space-y-8">
+                    <h1 className="text-3xl md:text-5xl font-bold text-slate-900 tracking-tight">
+                        Thank you for submitting your parts request!
+                    </h1>
 
-                    <h1 className="text-3xl font-bold text-slate-900 mb-4">PAYMENT RECEIVED</h1>
-
-                    <p className="text-lg text-slate-600 mb-8">
-                        Your order is being processed. A confirmation email will be sent to your registered email address.
+                    <p className="text-lg md:text-xl text-slate-600 font-medium leading-relaxed max-w-2xl mx-auto">
+                        A dedicated parts specialist will be reaching out to you by phone within the next 5–10 minutes. Please make sure you're available to take the call.
                     </p>
 
-                    <div className="space-y-4">
-                        <Link href="/">
-                            <Button className="w-full bg-primary hover:bg-primary/90 text-white font-bold h-10 px-8 rounded-lg shadow-md">
-                                Return to Home
+                    <div className="pt-4">
+                        <p className="text-slate-500 mb-6 text-lg">
+                            If you need immediate assistance, don’t hesitate to give us a call.
+                        </p>
+
+                        <a href="tel:8663171665" className="inline-block">
+                            <Button size="lg" className="bg-primary hover:bg-primary/90 text-white text-xl px-8 py-6 h-auto rounded-full shadow-lg shadow-primary/20 transition-all hover:scale-105">
+                                <Phone className="mr-3 h-6 w-6" />
+                                (866) 317-1665
                             </Button>
-                        </Link>
+                        </a>
                     </div>
                 </div>
             </main>

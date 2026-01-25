@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { getMakes, getModels, getYears, getParts } from "@/data/vehicleData";
 
@@ -15,6 +16,7 @@ export default function HeroSearchTool({ defaultPart = '' }: HeroSearchToolProps
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [isCollectingInfo, setIsCollectingInfo] = useState(false);
     const [contactInfo, setContactInfo] = useState({ name: '', email: '', phone: '' });
+    const [, setLocation] = useLocation();
 
     const years = useMemo(() => getYears(), []);
     const makes = useMemo(() => getMakes(), []);
@@ -58,6 +60,7 @@ export default function HeroSearchTool({ defaultPart = '' }: HeroSearchToolProps
             setIsSubmitting(false);
             setIsCollectingInfo(false);
             setIsSubmitted(true);
+            setLocation('/thank-you');
         }
     };
 
@@ -133,7 +136,14 @@ export default function HeroSearchTool({ defaultPart = '' }: HeroSearchToolProps
                             required
                             className="flex h-10 w-full rounded-md border border-input bg-white text-slate-900 px-3 py-2 text-sm"
                             value={contactInfo.phone}
-                            onChange={(e) => setContactInfo({ ...contactInfo, phone: e.target.value })}
+                            onChange={(e) => {
+                                const input = e.target.value.replace(/\D/g, '').slice(0, 10);
+                                const formatted = input.length === 0 ? '' :
+                                    input.length <= 3 ? input :
+                                        input.length <= 6 ? `(${input.slice(0, 3)}) ${input.slice(3)}` :
+                                            `(${input.slice(0, 3)}) ${input.slice(3, 6)}-${input.slice(6)}`;
+                                setContactInfo({ ...contactInfo, phone: formatted });
+                            }}
                         />
                     </div>
 

@@ -2,6 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage.js";
 import { addLeadToExcel } from "./services/graphService.js";
+import { sendLeadEmails } from "./services/emailService.js";
 
 export async function registerRoutes(app: Express): Promise<void> {
 
@@ -48,6 +49,11 @@ export async function registerRoutes(app: Express): Promise<void> {
         Vin: vin || "N/A",
         Message: message || "N/A",
         Date: new Date().toLocaleString()
+      });
+
+      // Send Emails
+      await sendLeadEmails({
+        name, email, phone, year, make, model, vin, part, message
       });
 
       res.status(200).json({ success: true, message: "Lead captured successfully" });
